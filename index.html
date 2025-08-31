@@ -5,15 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نظام التقارير</title>
 
-<!-- الخط -->
 <style>
 @font-face {
   font-family: "HelveticaNeueW23";
   src: url("fonts/HelveticaNeueW23-Regular.ttf") format("truetype");
 }
 
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: "HelveticaNeueW23", sans-serif;
   background: #f9f9f9;
   display: flex;
@@ -21,10 +25,12 @@ body {
   min-height: 100vh;
 }
 
+/* الهيدر */
 header {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   padding: 10px 20px;
   color: white;
   background: linear-gradient(270deg, #0a3d62, #3c6382, #38ada9);
@@ -34,7 +40,8 @@ header {
 }
 
 header img {
-  height: 50px;
+  max-height: 50px;
+  width: auto;
 }
 
 @keyframes gradientBG {
@@ -43,14 +50,21 @@ header img {
   100% { background-position: 0% 50% }
 }
 
+/* nav */
 nav {
   display: flex;
   flex-direction: column;
   padding: 10px;
   gap: 8px;
+  width: 100%;
 }
 
+/* كل تبويب */
 nav .tab {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 3px 8px rgba(0,0,0,0.25);
@@ -82,9 +96,12 @@ nav .tab:hover { transform: translateY(-2px); }
   gap: 12px;
   font-size: 14px;
   color: #f0f0f0;
+  flex-wrap: wrap;
 }
 
+/* الفوتر */
 footer {
+  width: 100%;
   text-align: center;
   padding: 8px;
   color: white;
@@ -98,15 +115,13 @@ footer {
 /* للجوال */
 @media (max-width: 768px) {
   header { flex-direction: column; text-align: center; padding:8px; }
-  header img { height: 45px; }
-  nav { padding: 6px; gap:6px; }
-  nav .tab { font-size: 16px; padding: 10px; }
-  .report-types { flex-direction: column; gap: 4px; font-size: 12px; }
-  footer { padding: 6px; font-size: 12px; }
+  header img { max-height: 45px; }
+  nav { padding: 6px; gap: 6px; }
+  nav .tab { font-size: 16px; padding: 12px; }
+  .report-types { flex-direction: row; gap: 6px; font-size: 12px; justify-content: center; }
 }
 </style>
 
-<!-- أيقونات -->
 <link rel="icon" href="https://a.top4top.io/p_3530c738a1.png" type="image/png">
 <link rel="apple-touch-icon" href="https://a.top4top.io/p_3530c738a1.png">
 <link rel="manifest" href="manifest.json">
@@ -145,5 +160,107 @@ footer {
   تصميم : أ.ضيف الله الطويرقي  0543559220
 </footer>
 
+<script>
+function isInStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+// عدد مرات ظهور الرسالة
+let installPromptCount = parseInt(localStorage.getItem('installPromptCount')) || 0;
+
+if (!isInStandaloneMode() && installPromptCount < 3) {
+  let deferredPrompt;
+
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.background = 'rgba(0,0,0,0.5)';
+  overlay.style.zIndex = 9999;
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+
+  const messageDiv = document.createElement('div');
+  messageDiv.style.background = '#222';
+  messageDiv.style.color = 'white';
+  messageDiv.style.padding = '20px';
+  messageDiv.style.borderRadius = '12px';
+  messageDiv.style.textAlign = 'center';
+  messageDiv.style.maxWidth = '90%';
+  messageDiv.style.display = 'flex';
+  messageDiv.style.flexDirection = 'column';
+  messageDiv.style.gap = '10px';
+
+  messageDiv.innerHTML = `
+    <span>ستظهر هذه الرسالة ثلاث مرات فقط</span>
+      <span>لتثبيت التطبيق على شاشتك الرئيسية:</span>
+    <div id="installButtons" style="display:flex; gap:8px; justify-content:center; flex-wrap: wrap;"></div>
+    <button id="closeInstallPrompt" style="padding:6px 12px; border:none; border-radius:8px; cursor:pointer; background:#16a085; color:white;">إغلاق</button>
+  `;
+
+  overlay.appendChild(messageDiv);
+  document.body.appendChild(overlay);
+
+  const installButtons = document.getElementById('installButtons');
+
+  const androidBtn = document.createElement('button');
+  androidBtn.textContent = 'تثبيت على Android';
+  androidBtn.style.padding = '6px 12px';
+  androidBtn.style.border = 'none';
+  androidBtn.style.borderRadius = '8px';
+  androidBtn.style.cursor = 'pointer';
+  androidBtn.style.background = '#2980b9';
+  androidBtn.style.color = 'white';
+  androidBtn.style.display = 'none';
+  installButtons.appendChild(androidBtn);
+
+  const iosBtn = document.createElement('button');
+  iosBtn.textContent = 'تثبيت على iOS';
+  iosBtn.style.padding = '6px 12px';
+  iosBtn.style.border = 'none';
+  iosBtn.style.borderRadius = '8px';
+  iosBtn.style.cursor = 'pointer';
+  iosBtn.style.background = '#f39c12';
+  iosBtn.style.color = 'white';
+  installButtons.appendChild(iosBtn);
+
+  iosBtn.onclick = () => {
+    alert("على iOS: اضغط زر المشاركة ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
+  };
+
+  document.getElementById('closeInstallPrompt').onclick = function() {
+    overlay.remove();
+    localStorage.setItem('installPromptCount', installPromptCount + 1);
+  };
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    androidBtn.style.display = 'inline-block';
+
+    androidBtn.onclick = async () => {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+      overlay.remove();
+      localStorage.setItem('installPromptCount', installPromptCount + 1);
+    };
+  });
+}
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
