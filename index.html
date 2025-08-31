@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام التقارير</title>
+
+<!-- الخط -->
+<style>
+@font-face {
+  font-family: "HelveticaNeueW23";
+  src: url("fonts/HelveticaNeueW23-Regular.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  font-family: "HelveticaNeueW23", sans-serif;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+  background: linear-gradient(270deg, #0a3d62, #3c6382, #38ada9);
+  background-size: 600% 600%;
+  animation: gradientBG 12s ease infinite;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+header img {
+  height: 50px;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 8px;
+}
+
+nav .tab {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  color: white;
+  text-align: center;
+  padding: 14px;
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+nav .tab:hover { transform: translateY(-2px); }
+
+/* ألوان تبويبات متحركة */
+.tab1 { background: linear-gradient(270deg, #2c3e50, #34495e); background-size: 600% 600%; animation: gradient1 12s ease infinite; }
+.tab2 { background: linear-gradient(270deg, #1f618d, #2980b9); background-size: 600% 600%; animation: gradient2 14s ease infinite; }
+.tab3 { background: linear-gradient(270deg, #117864, #16a085); background-size: 600% 600%; animation: gradient3 16s ease infinite; }
+.tab4 { background: linear-gradient(270deg, #873600, #d35400); background-size: 600% 600%; animation: gradient4 18s ease infinite; }
+
+@keyframes gradient1 { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+@keyframes gradient2 { 0%{background-position:100% 50%}50%{background-position:0% 50%}100%{background-position:100% 50%} }
+@keyframes gradient3 { 0%{background-position:50% 0%}50%{background-position:50% 100%}100%{background-position:50% 0%} }
+@keyframes gradient4 { 0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%} }
+
+/* نصوص تحت نظام التقارير */
+.report-types {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  gap: 12px;
+  font-size: 14px;
+  color: #f0f0f0;
+}
+
+footer {
+  text-align: center;
+  padding: 8px;
+  color: white;
+  font-size: 14px;
+  background: linear-gradient(270deg, #0a3d62, #3c6382, #38ada9);
+  background-size: 600% 600%;
+  animation: gradientBG 12s ease infinite;
+  margin-top: auto;
+}
+
+/* للجوال */
+@media (max-width: 768px) {
+  header { flex-direction: column; text-align: center; padding:8px; }
+  header img { height: 45px; }
+  nav { padding: 6px; gap:6px; }
+  nav .tab { font-size: 16px; padding: 10px; }
+  .report-types { flex-direction: column; gap: 4px; font-size: 12px; }
+  footer { padding: 6px; font-size: 12px; }
+}
+</style>
+
+<!-- أيقونات -->
+<link rel="icon" href="https://a.top4top.io/p_3530c738a1.png" type="image/png">
+<link rel="apple-touch-icon" href="https://a.top4top.io/p_3530c738a1.png">
+<link rel="manifest" href="manifest.json">
+
+</head>
+<body>
+
+<header>
+  <img src="https://c.top4top.io/p_353083rj21.png" alt="شعار الوزارة">
+</header>
+
+<nav>
+  <div class="tab tab1">
+    <a href="https://defullah2010-svg.github.io/R2/" target="_blank" style="color:white; text-decoration:none;">📊 نظام التقارير</a>
+    <div class="report-types">
+      <span>اليومي</span>
+      <span>الأسبوعي</span>
+      <span>الشهري</span>
+    </div>
+  </div>
+
+  <div class="tab tab2">
+    🎯 <a href="https://defullah2010-svg.github.io/A2/" target="_blank" style="color:white; text-decoration:none;">برامج النشاط الطلابي</a>
+  </div>
+
+  <div class="tab tab3">
+    📞 <a href="https://defullah2010-svg.github.io/L2/" target="_blank" style="color:white; text-decoration:none;">برنامج التواصل مع ولي أمر الطالب</a>
+  </div>
+
+  <div class="tab tab4">
+    📄 <a href="https://defullah2010-svg.github.io/cash/" target="_blank" style="color:white; text-decoration:none;">إتفاقية الاستخدام</a>
+  </div>
+</nav>
+
+<footer>
+  تصميم : أ.ضيف الله الطويرقي  0543559220
+</footer>
+
+</body>
+</html>
