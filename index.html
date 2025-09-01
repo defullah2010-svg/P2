@@ -135,7 +135,7 @@ footer {
 
 <nav>
   <div class="tab tab1">
-    <a href="https://defullah2010-svg.github.io/R2/" target="_blank" style="color:white; text-decoration:none;">📊 برنامج التقارير</a>
+   📊 <a href="https://defullah2010-svg.github.io/R2/" target="_blank" style="color:white; text-decoration:none;">برنامج التقارير</a>
     <div class="report-types">
       <span>اليومي</span>
       <span>الأسبوعي</span>
@@ -165,10 +165,12 @@ function isInStandaloneMode() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 }
 
-// عدد مرات ظهور الرسالة
-let installPromptCount = parseInt(localStorage.getItem('installPromptCount')) || 0;
+// التحقق إذا كان الجهاز كمبيوتر أو جوال
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
 
-if (!isInStandaloneMode() && installPromptCount < 3) {
+if (!isInStandaloneMode()) {
   let deferredPrompt;
 
   const overlay = document.createElement('div');
@@ -195,14 +197,33 @@ if (!isInStandaloneMode() && installPromptCount < 3) {
   messageDiv.style.gap = '10px';
 
   messageDiv.innerHTML = `
-    <span>ستظهر هذه الرسالة ثلاث مرات فقط</span>
-      <span>لتثبيت التطبيق على شاشتك الرئيسية:</span>
+    <span>⚡ لتثبيت التطبيق على شاشتك الرئيسية:</span>
     <div id="installButtons" style="display:flex; gap:8px; justify-content:center; flex-wrap: wrap;"></div>
-    <button id="closeInstallPrompt" style="padding:6px 12px; border:none; border-radius:8px; cursor:pointer; background:#16a085; color:white;">إغلاق</button>
   `;
 
+  // زر إغلاق يظهر فقط لو المستخدم على كمبيوتر
+  if (!isMobile()) {
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = "❌ إغلاق الرسالة نهائيًا";
+    closeBtn.style.padding = "6px 12px";
+    closeBtn.style.border = "none";
+    closeBtn.style.borderRadius = "8px";
+    closeBtn.style.cursor = "pointer";
+    closeBtn.style.background = "#c0392b";
+    closeBtn.style.color = "white";
+    closeBtn.onclick = () => {
+      overlay.remove();
+      localStorage.setItem("hideInstallPrompt", "true");
+    };
+    messageDiv.appendChild(closeBtn);
+  }
+
   overlay.appendChild(messageDiv);
-  document.body.appendChild(overlay);
+
+  // إذا كان المستخدم قد أغلق الرسالة مسبقًا على الكمبيوتر لا نظهرها
+  if (localStorage.getItem("hideInstallPrompt") !== "true") {
+    document.body.appendChild(overlay);
+  }
 
   const installButtons = document.getElementById('installButtons');
 
@@ -228,12 +249,7 @@ if (!isInStandaloneMode() && installPromptCount < 3) {
   installButtons.appendChild(iosBtn);
 
   iosBtn.onclick = () => {
-    alert("على iOS: اضغط زر المشاركة ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
-  };
-
-  document.getElementById('closeInstallPrompt').onclick = function() {
-    overlay.remove();
-    localStorage.setItem('installPromptCount', installPromptCount + 1);
+    alert("📱 على iOS: اضغط زر المشاركة ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
   };
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -244,8 +260,7 @@ if (!isInStandaloneMode() && installPromptCount < 3) {
     androidBtn.onclick = async () => {
       deferredPrompt.prompt();
       deferredPrompt = null;
-      overlay.remove();
-      localStorage.setItem('installPromptCount', installPromptCount + 1);
+      overlay.remove(); // يختفي بعد التثبيت
     };
   });
 }
@@ -253,14 +268,3 @@ if (!isInStandaloneMode() && installPromptCount < 3) {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
