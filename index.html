@@ -3,284 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام التقارير</title>
-
+<title>تنويه</title>
 <style>
-@font-face {
-  font-family: "HelveticaNeueW23";
-  src: url("fonts/HelveticaNeueW23-Regular.ttf") format("truetype");
-}
+  /* تعريف الخط */
+  @font-face {
+    font-family: "HelveticaNeueW23";
+    src: url("fonts/HelveticaNeueW23-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  body {
+    font-family: "HelveticaNeueW23", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-body {
-  font-family: "HelveticaNeueW23", sans-serif;
-  background: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+    /* خلفية متدرجة أزرق تركوازي غامق مع حركة */
+    background: linear-gradient(135deg, #006d77, #004c54, #008b8b);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+  }
 
-/* الهيدر */
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 10px 20px;
-  color: white;
-  background: linear-gradient(270deg, #0a3d62, #3c6382, #38ada9);
-  background-size: 600% 600%;
-  animation: gradientBG 12s ease infinite;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-header img {
-  max-height: 50px;
-  width: auto;
-}
+  .message-container {
+    background: rgba(255,255,255,0.95);
+    padding: 30px;
+    max-width: 600px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    line-height: 1.6;
+  }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
-}
+  .message-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #15445a;
+  }
 
-/* nav */
-nav {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  gap: 8px;
-  width: 100%;
-}
+  .message-container p {
+    font-size: 16px;
+    color: #555;
+    white-space: pre-line;
+  }
 
-/* كل تبويب */
-nav .tab {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-  color: white;
-  text-align: center;
-  padding: 14px;
-  font-size: 18px;
-  transition: transform 0.3s;
-}
+  .message-container p .greeting {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+    color: #2c7a7b;
+  }
 
-nav .tab:hover { transform: translateY(-2px); }
+  .message-container p strong {
+    font-weight: bold;
+    color: #b36b3f;
+  }
 
-/* ألوان تبويبات متحركة */
-.tab1 { background: linear-gradient(270deg, #2c3e50, #34495e); background-size: 600% 600%; animation: gradient1 12s ease infinite; }
-.tab2 { background: linear-gradient(270deg, #1f618d, #2980b9); background-size: 600% 600%; animation: gradient2 14s ease infinite; }
-.tab3 { background: linear-gradient(270deg, #117864, #16a085); background-size: 600% 600%; animation: gradient3 16s ease infinite; }
-.tab4 { background: linear-gradient(270deg, #873600, #d35400); background-size: 600% 600%; animation: gradient4 18s ease infinite; }
+  .message-container img {
+    max-width: 150px;
+    margin: 20px 0;
+  }
 
-@keyframes gradient1 { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
-@keyframes gradient2 { 0%{background-position:100% 50%}50%{background-position:0% 50%}100%{background-position:100% 50%} }
-@keyframes gradient3 { 0%{background-position:50% 0%}50%{background-position:50% 100%}100%{background-position:50% 0%} }
-@keyframes gradient4 { 0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%} }
+  footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+  }
 
-/* نصوص تحت نظام التقارير */
-.report-types {
-  display: flex;
-  justify-content: center;
-  margin-top: 6px;
-  gap: 12px;
-  font-size: 14px;
-  color: #f0f0f0;
-  flex-wrap: wrap;
-}
-
-/* التنبيه تحت اتفاقية الاستخدام */
-.usage-warning {
-  text-align: center;
-  color: red;
-  font-weight: bold;
-  margin-top: 6px;
-  font-size: 16px;
-}
-
-/* الفوتر */
-footer {
-  width: 100%;
-  text-align: center;
-  padding: 8px;
-  color: white;
-  font-size: 14px;
-  background: linear-gradient(270deg, #0a3d62, #3c6382, #38ada9);
-  background-size: 600% 600%;
-  animation: gradientBG 12s ease infinite;
-  margin-top: auto;
-}
-
-/* للجوال */
-@media (max-width: 768px) {
-  header { flex-direction: column; text-align: center; padding:8px; }
-  header img { max-height: 45px; }
-  nav { padding: 6px; gap: 6px; }
-  nav .tab { font-size: 16px; padding: 12px; }
-  .report-types { flex-direction: row; gap: 6px; font-size: 12px; justify-content: center; }
-}
+  @media (max-width: 650px) {
+    .message-container {
+      padding: 20px;
+    }
+    .message-container h1 {
+      font-size: 20px;
+    }
+  }
 </style>
-
-<link rel="icon" href="https://a.top4top.io/p_3530c738a1.png" type="image/png">
-<link rel="apple-touch-icon" href="https://a.top4top.io/p_3530c738a1.png">
-<link rel="manifest" href="manifest.json">
-
 </head>
 <body>
 
-<header>
-  <img src="https://c.top4top.io/p_353083rj21.png" alt="شعار الوزارة">
-</header>
+<div class="message-container">
+  <h1>💡 تنويه</h1>
+  <p>
+    <span class="greeting">السلام عليكم ورحمة الله وبركاته</span>
+إتفاقية الاشتراك للعام الدراسي الحالي 1447هـ
+عزيزي المستفيد/ة
+رسوم الاستخدام كالتالي
+1-برنامج التقارير <strong>10 ريال</strong>
+2-برامج النشاط الطلابي <strong>10 ريال</strong>
+3-برنامج التواصل مع ولي أمر الطالب/ة <strong>10 ريال</strong> 
 
-<nav>
-  <div class="tab tab1">
-   📊 <a href="https://defullah2010-svg.github.io/R2/" target="_blank" style="color:white; text-decoration:none;">برنامج التقارير</a>
-    <div class="report-types">
-      <span>اليومي</span>
-      <span>الأسبوعي</span>
-      <span>الشهري</span>
-    </div>
-  </div>
+جميع البرامج <strong>30 ريال</strong> رقم الحساب أسفل الشاشة <strong><span>&#9660;</span></strong> 
 
-  <div class="tab tab2">
-    🎯 <a href="https://defullah2010-svg.github.io/A2/" target="_blank" style="color:white; text-decoration:none;">برامج النشاط الطلابي</a>
-  </div>
+وفي حال دفعك للرسوم في الروابط المرسلة <strong> سابقاً</strong>
+فلاحاجة للدفع مرة أخرى ومن حقك استخدام البرنامج الذي قمت بتسديد رسومه
+شاكرين حسن تفهمكم، متمنين لكم مزيداً من التوفيق،  
+وأذنت لمن يشهد، والله خير الشاهدين.
+  </p>
+  <img src="images/cash.png" alt="cash">
 
-  <div class="tab tab3">
-    📞 <a href="https://defullah2010-svg.github.io/L2/" target="_blank" style="color:white; text-decoration:none;">برنامج التواصل مع ولي أمر الطالبة</a>
-  </div>
-
-  <div class="tab tab4">
-    📄 <a href="https://defullah2010-svg.github.io/cash/" target="_blank" style="color:white; text-decoration:none;">اتفاقية الاستخدام</a>
-  </div>
-
-  <!-- السهم والنص الأحمر -->
-  <div class="usage-warning">
-    ⬆️
-<br></br>
- <span>الرجاء قراءة اتفاقية الاستخدام</span>
-  </div>
-</nav>
-
-<footer>
-  تصميم : أ.ضيف الله الطويرقي  0543559220
-</footer>
-
-<script>
-function isInStandaloneMode() {
-  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-}
-
-// التحقق إذا كان الجهاز كمبيوتر أو جوال
-function isMobile() {
-  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-if (!isInStandaloneMode()) {
-  let deferredPrompt;
-
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = 0;
-  overlay.style.left = 0;
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.background = 'rgba(0,0,0,0.5)';
-  overlay.style.zIndex = 9999;
-  overlay.style.display = 'flex';
-  overlay.style.alignItems = 'center';
-  overlay.style.justifyContent = 'center';
-
-  const messageDiv = document.createElement('div');
-  messageDiv.style.background = '#222';
-  messageDiv.style.color = 'white';
-  messageDiv.style.padding = '20px';
-  messageDiv.style.borderRadius = '12px';
-  messageDiv.style.textAlign = 'center';
-  messageDiv.style.maxWidth = '90%';
-  messageDiv.style.display = 'flex';
-  messageDiv.style.flexDirection = 'column';
-  messageDiv.style.gap = '10px';
-
-  messageDiv.innerHTML = `
-    <span>⚡ لتثبيت التطبيق على شاشتك الرئيسية:</span>
-    <div id="installButtons" style="display:flex; gap:8px; justify-content:center; flex-wrap: wrap;"></div>
-  `;
-
-  // زر إغلاق يظهر فقط لو المستخدم على كمبيوتر
-  if (!isMobile()) {
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = "❌ إغلاق الرسالة نهائيًا";
-    closeBtn.style.padding = "6px 12px";
-    closeBtn.style.border = "none";
-    closeBtn.style.borderRadius = "8px";
-    closeBtn.style.cursor = "pointer";
-    closeBtn.style.background = "#c0392b";
-    closeBtn.style.color = "white";
-    closeBtn.onclick = () => {
-      overlay.remove();
-      localStorage.setItem("hideInstallPrompt", "true");
-    };
-    messageDiv.appendChild(closeBtn);
-  }
-
-  overlay.appendChild(messageDiv);
-
-  // إذا كان المستخدم قد أغلق الرسالة مسبقًا على الكمبيوتر لا نظهرها
-  if (localStorage.getItem("hideInstallPrompt") !== "true") {
-    document.body.appendChild(overlay);
-  }
-
-  const installButtons = document.getElementById('installButtons');
-
-  const androidBtn = document.createElement('button');
-  androidBtn.textContent = 'تثبيت على Android';
-  androidBtn.style.padding = '6px 12px';
-  androidBtn.style.border = 'none';
-  androidBtn.style.borderRadius = '8px';
-  androidBtn.style.cursor = 'pointer';
-  androidBtn.style.background = '#2980b9';
-  androidBtn.style.color = 'white';
-  androidBtn.style.display = 'none';
-  installButtons.appendChild(androidBtn);
-
-  const iosBtn = document.createElement('button');
-  iosBtn.textContent = 'تثبيت على iOS';
-  iosBtn.style.padding = '6px 12px';
-  iosBtn.style.border = 'none';
-  iosBtn.style.borderRadius = '8px';
-  iosBtn.style.cursor = 'pointer';
-  iosBtn.style.background = '#f39c12';
-  iosBtn.style.color = 'white';
-  installButtons.appendChild(iosBtn);
-
-  iosBtn.onclick = () => {
-    alert("📱 على iOS: اضغط زر المشاركة ثم اختر 'إضافة إلى الشاشة الرئيسية'.");
-  };
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    androidBtn.style.display = 'inline-block';
-
-    androidBtn.onclick = async () => {
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-      overlay.remove(); // يختفي بعد التثبيت
-    };
-  });
-}
-</script>
+  <footer>تصميم : أ.ضيف الله الطويرقي 0543559220</footer>
+</div>
 
 </body>
 </html>
