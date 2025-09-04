@@ -82,11 +82,14 @@ nav .tab:hover { transform: translateY(-2px); }
 .tab2 { background: linear-gradient(270deg, #1f618d, #2980b9); background-size: 600% 600%; animation: gradient2 14s ease infinite; }
 .tab3 { background: linear-gradient(270deg, #117864, #16a085); background-size: 600% 600%; animation: gradient3 16s ease infinite; }
 .tab4 { background: linear-gradient(270deg, #873600, #d35400); background-size: 600% 600%; animation: gradient4 18s ease infinite; }
+/* تبويب تقرير حصة الانتظار */
+.tab5 { background: linear-gradient(270deg, #2f2f2f, #4b4b4b); background-size: 600% 600%; animation: gradient5 16s ease infinite; }
 
 @keyframes gradient1 { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
 @keyframes gradient2 { 0%{background-position:100% 50%}50%{background-position:0% 50%}100%{background-position:100% 50%} }
 @keyframes gradient3 { 0%{background-position:50% 0%}50%{background-position:50% 100%}100%{background-position:50% 0%} }
 @keyframes gradient4 { 0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%} }
+@keyframes gradient5 { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
 
 /* نصوص تحت نظام التقارير */
 .report-types {
@@ -160,6 +163,11 @@ footer {
     📞 <a href="https://defullah2010-svg.github.io/L2/" target="_blank" style="color:white; text-decoration:none;">برنامج التواصل مع ولي أمر الطالبة</a>
   </div>
 
+  <!-- تبويب تقرير حصة الانتظار -->
+  <div class="tab tab5">
+    🕒 <a href="https://defullah2010-svg.github.io/W2/" target="_blank" style="color:white; text-decoration:none;">تقرير حصة الانتظار</a>
+  </div>
+
   <div class="tab tab4">
     📄 <a href="https://defullah2010-svg.github.io/cash/" target="_blank" style="color:white; text-decoration:none;">اتفاقية الاستخدام</a>
   </div>
@@ -181,7 +189,6 @@ function isInStandaloneMode() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 }
 
-// التحقق إذا كان الجهاز كمبيوتر أو جوال
 function isMobile() {
   return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
@@ -217,7 +224,6 @@ if (!isInStandaloneMode()) {
     <div id="installButtons" style="display:flex; gap:8px; justify-content:center; flex-wrap: wrap;"></div>
   `;
 
-  // زر إغلاق يظهر فقط لو المستخدم على كمبيوتر
   if (!isMobile()) {
     const closeBtn = document.createElement('button');
     closeBtn.textContent = "❌ إغلاق الرسالة نهائيًا";
@@ -236,7 +242,6 @@ if (!isInStandaloneMode()) {
 
   overlay.appendChild(messageDiv);
 
-  // إذا كان المستخدم قد أغلق الرسالة مسبقًا على الكمبيوتر لا نظهرها
   if (localStorage.getItem("hideInstallPrompt") !== "true") {
     document.body.appendChild(overlay);
   }
@@ -276,7 +281,7 @@ if (!isInStandaloneMode()) {
     androidBtn.onclick = async () => {
       deferredPrompt.prompt();
       deferredPrompt = null;
-      overlay.remove(); // يختفي بعد التثبيت
+      overlay.remove();
     };
   });
 }
